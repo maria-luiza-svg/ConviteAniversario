@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Convite de Aniversário</title>
+
+    <!-- Fontes -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <header class="w-full px-5 pt-8 pb-4 md:px-10 lg:px-14">
+            <div class="mx-auto flex max-w-6xl items-center gap-3">
+            </div>
+        </header>
+
+
+        <main class="w-full px-5 pb-10 md:px-10 lg:px-14">
+
+            <div class="mx-auto max-w-6xl">
+
+                <div class="grid items-stretch gap-7 lg:grid-cols-[1.05fr_.95fr]">
+
+
+                    <!-- FORMULÁRIO -->
+                    <section class="form-panel rounded-3xl p-5 sm:p-7">
+
+                        <div class="mb-5 flex items-center gap-3">
+
+                            <div>
+                                <h2>
+                                    Detalhes da comemoração
+                                </h2>
+
+                                <p>
+                                    Preencha o seu convite:
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <form id="invite-form">
+
+
+                            <!-- NOME -->
+                            <div class="mb-4">
+
+                                <label
+                                    class="field-label"
+                                    for="seu_nome"
+                                >
+                                    Digite seu nome
+                                </label>
+
+                                <input
+                                    id="seu_nome"
+                                    name="seu_nome"
+                                    class="field-control"
+                                    type="text"
+                                    required
+                                    maxlength="60"
+                                    autocomplete="name"
+                                    placeholder="Ex.: Olivia"
+                                >
+
+                            </div>
+
+
+                            <!-- PRESENÇA -->
+                            <div class="mb-4">
+
+                                <label
+                                    class="field-label"
+                                    for="presenca"
+                                >
+                                    Você poderá comparecer?
+                                </label>
+
+                                <select
+                                    id="presenca"
+                                    name="presenca"
+                                    class="field-control"
+                                    required
+                                >
+
+                                    <option value="" selected disabled>
+                                        Selecione uma opção
+                                    </option>
+
+                                    <option value="Sim">
+                                        Sim
+                                    </option>
+
+                                    <option value="Não">
+                                        Não
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- RELAÇÃO -->
+                            <div class="mb-4">
+
+                                <label
+                                    class="field-label"
+                                    for="sobre_voce"
+                                >
+                                    O que você é da aniversariante?
+                                </label>
+
+                                <select
+                                    id="sobre_voce"
+                                    name="sobre_voce"
+                                    class="field-control"
+                                    required
+                                >
+
+                                    <option value="" selected disabled>
+                                        Selecione uma opção
+                                    </option>
+
+                                    <option value="Mãe/pai">
+                                        Mãe/pai
+                                    </option>
+
+                                    <option value="Namorado">
+                                        Namorado
+                                    </option>
+
+                                    <option value="Amigo(a)">
+                                        Amigo(a)
+                                    </option>
+
+                                    <option value="Parente">
+                                        Parente
+                                    </option>
+
+                                    <option value="Outro">
+                                        Outro...
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- CONTATO -->
+                            <div class="mb-4">
+
+                                <label
+                                    class="field-label"
+                                    for="contato"
+                                >
+                                    Digite seu contato
+                                </label>
+
+                                <input
+                                    id="contato"
+                                    name="contato"
+                                    class="field-control"
+                                    type="text"
+                                    required
+                                    maxlength="180"
+                                    placeholder="Ex.: 7199999-9999"
+                                >
+
+                            </div>
+
+
+                            <!-- MENSAGEM -->
+                            <div class="mb-4">
+
+                                <label
+                                    class="field-label"
+                                    for="mensagem"
+                                >
+                                    Mensagem do convite
+                                </label>
+
+                                <textarea
+                                    id="mensagem"
+                                    name="mensagem"
+                                    class="field-control"
+                                    rows="2"
+                                    maxlength="180"
+                                    placeholder="Escreva uma mensagem... (Opcional)"
+                                ></textarea>
+
+                            </div>
+
+
+                            <!-- MENSAGEM DE SUCESSO -->
+                            <div
+                                id="success-message"
+                                class="status-message status-success mt-5"
+                                role="status"
+                                aria-live="polite"
+                            >
+
+                                <i data-lucide="check-circle"></i>
+
+                                <span>
+                                    Resposta enviada com carinho!
+                                </span>
+
+                            </div>
+
+
+                            <!-- MENSAGEM DE ERRO -->
+                            <div
+                                id="error-message"
+                                class="status-message status-error mt-5"
+                                role="alert"
+                                aria-live="assertive"
+                            >
+
+                                <i data-lucide="circle-alert"></i>
+
+                                <span>
+                                    Não foi possível enviar agora.
+                                    Confira os campos e tente novamente.
+                                </span>
+
+                            </div>
+
+
+                            <!-- BOTÃO -->
+                            <button
+                                id="submit-button"
+                                class="submit-button mt-6 flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold"
+                                type="submit"
+                            >
+
+                                <i data-lucide="heart"></i>
+
+                                <span>
+                                    Enviar minha resposta
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- PRÉVIA DO CONVITE -->
+                    <aside
+                        class="flex flex-col"
+                        aria-labelledby="preview-heading"
+                    >
+
+                        <div class="mb-4 flex items-center gap-3 lg:justify-center">
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                            >
+
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"
+                                />
+
+                            </svg>
+
+
+                            <div class="invite-wrap flex-1">
+
+                                <article
+                                    id="invite-card"
+                                    class="invite-card theme-classico"
+                                    aria-label="Prévia do convite de aniversário"
+                                >
+
+                                    <img
+                                        src="laco2.png"
+                                        alt="Imagem de um laço decorativo"
+                                        width="130"
+                                        height="130"
+                                        class="invite-ribbon"
+                                    >
+
+
+                                    <p class="eyebrow m-0 text-xs font-bold">
+                                        uma celebração para o
+                                    </p>
+
+
+                                    <p
+                                        id="preview-age"
+                                        class="preview-age"
+                                    >
+                                        #18tou de
+                                    </p>
+
+
+                                    <p
+                                        id="preview-name"
+                                        class="preview-name"
+                                    >
+                                        Malivis
+                                    </p>
+
+
+                                    <p
+                                        id="preview-message"
+                                        class="preview-message"
+                                    >
+                                        Prepare-se para uma festa inesquecível!
+                                        Venha celebrar conosco e criar memórias
+                                        especiais que durarão para sempre.
+                                    </p>
+
+
+                                    <!-- DATA -->
+                                    <div class="event-box">
+
+                                        <p
+                                            id="preview-date"
+                                            class="preview-date"
+                                        >
+                                            19/09 · 10:00
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- LOCAL -->
+                                    <p
+                                        id="preview-place"
+                                        class="preview-place"
+                                    >
+                                        Seu local especial
+                                    </p>
+
+                                </article>
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- Seu JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
